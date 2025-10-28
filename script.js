@@ -153,6 +153,12 @@ const btnAction = function () {
         "SD:",
         stats.sd.toFixed(2),
         "ms",
+        "Left Mean:",
+        stats.leftMean.toFixed(2),
+        "ms",
+        "Right Mean:",
+        stats.rightMean.toFixed(2),
+        "ms",
       ].join(" ");
     } else {
       console.log("DBG: Should this occur?");
@@ -162,6 +168,21 @@ const btnAction = function () {
 
 const computeStatistics = function (timeArr) {
   //to get mean, get sum of all trials and divide by number of trials m = sum(x)/cnt(x)
+    let leftSum = 0;
+    let rightSum = 0;
+
+    for (let i = 0; i < experiment.directions.length; i++) {
+        if (experiment.directions[i] === "left") {
+            leftSum += timeArr[i];
+        }
+        else {
+            rightSum += timeArr[i];
+        }
+    }
+
+    let leftAverage = leftSum / 5;
+    let rightAverage = rightSum / 5;
+
   const sums = timeArr.reduce((acc, num) => acc + num, 0);
   const meanDeltaTime = sums / timeArr.length;
 
@@ -176,6 +197,8 @@ const computeStatistics = function (timeArr) {
     sd: standardDeviationTime,
     mean: meanDeltaTime,
     cnt: timeArr.length,
+    leftMean: leftAverage,
+    rightMean: rightAverage,
   };
 };
 
