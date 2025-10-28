@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Human Capabilities - Reaction Test (Auditive)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 id="text">Reaction Test (Auditive)</h1>
+    <div id="stimulus">
+      <div class="circle" style="background-color: #f0f0f0">
+        <img
+          src="155780.svg"
+          id="image"
+          width="200"
+          height="200"
+        />
+      </div>
+      <div id="instructions">
+        Press the start button to start the experiment. As soon as you hear a
+        sound, press the space bar. Your reaction time is measured. After 10
+        trials, your times will be displayed and exported as a csv file. Refresh
+        the page to repeat the experiment.
+      </div>
+    </div>
+    <div id="controls">
+      <span class="button-default button-enabled">Start Experiment</span>
+      <span id="time">&nbsp;</span>
+    </div>
+    <audio id="audio" src="beep-07a.mp3"></audio>
+    <script src="scriptAuditive.js"></script>
+  </body>
+</html>
