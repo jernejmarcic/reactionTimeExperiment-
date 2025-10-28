@@ -7,11 +7,13 @@ const experiment = {
   stimulusWait: false,
   stimulusShown: false,
   stimulusShownAt: -1,
-  btnDisabled:false
+  btnDisabled: false,
+    currentCondition: null, // displays left png or right based on this condition  
 };
 
 const btn = document.querySelector(".button-default");
 const stimulus = document.querySelector(".circle");
+const arrowImage = document.querySelector("#arrow-image");
 
 const advanceTrial = function () {
   //reset stimulus
@@ -53,6 +55,14 @@ const scheduleStimulus = function () {
 };
 
 const showStimulus = function () {
+
+    if (experiment.currentCondition === "left") {
+        arrowImage.src = "arrow-left.png";
+    }
+    else {
+        arrowImage.src = "arrow-right.png";
+    }
+
   experiment.stimulusShownAt = Date.now();
   console.info(
     "INFO: Trial",
@@ -67,6 +77,11 @@ const showStimulus = function () {
 
 const updateStimulus = function (state) {
   const otherState = state == "active" ? "inactive" : "active";
+
+    if (state === "inactive") {
+        arrowImage.src = "";
+        stimulus.style.backgroundColor = "";
+    }
 
   stimulus.classList.add(state);
   stimulus.classList.remove(otherState);

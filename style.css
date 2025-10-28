@@ -84,11 +84,22 @@ div#instructions {
   justify-content: center;
 }
 
+.circle img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    display: none;
+}
+
 .inactive {
-  background-color: #c6dbf7;
+  background-color: white;
 }
 .active {
-  background-color: orange;
+  background-color: white;
+}
+
+.active img {
+    display: block;
 }
 
 div#controls{
