@@ -160,7 +160,9 @@ const exportExperimentLog = function () {
   let csvData = experiment.times
     .map((time, idx) => [pid, idx, time].join(","))
     .join("\n"); //map passes every record in the log array to the getCSVDataLine, we also need to include pid to all rows
-  exportData(csvHeader + csvData, "VisualReactionTestResults.csv");
+  const stamp = new Date().toISOString().slice(0,19)
+exportData(csvHeader + csvData, 'VisualReactionTestResults-' + stamp + '.csv');
+
 };
 
 const exportData = function (csvDataString, exportFileName) {
