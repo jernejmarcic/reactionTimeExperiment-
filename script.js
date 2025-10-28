@@ -1,5 +1,6 @@
 const experiment = {
   times: [],
+  directions: [],
   maxTrials: 10,
   waitHnd: -1,
   started: false,
@@ -8,12 +9,17 @@ const experiment = {
   stimulusShown: false,
   stimulusShownAt: -1,
   btnDisabled: false,
+  remainingDirections: shuffle(["left","left","left","left","left","right","right","right","right","right"]),
     currentCondition: null, // displays left png or right based on this condition  
 };
 
 const btn = document.querySelector(".button-default");
 const stimulus = document.querySelector(".circle");
 const arrowImage = document.querySelector("#arrow-image");
+
+function shuffle(array){
+  return array.sort(() => Math.random() - 0.5);
+}
 
 const advanceTrial = function () {
   //reset stimulus
@@ -55,6 +61,7 @@ const scheduleStimulus = function () {
 };
 
 const showStimulus = function () {
+    experiment.currentCondition = experiment.remainingDirections.pop();
 
     if (experiment.currentCondition === "left") {
         arrowImage.src = "arrow-left.png";
@@ -67,6 +74,8 @@ const showStimulus = function () {
   console.info(
     "INFO: Trial",
     experiment.times.length,
+    "Direction:",
+    experiment.currentCondition,
     ". Stimulus shown",
     experiment.stimulusShownAt
   );
@@ -89,10 +98,11 @@ const updateStimulus = function (state) {
 
 const logReaction = function () {
   let userReactedAt = Date.now();
-  console.info("INFO: User reaction captured.", userReactedAt);
+  console.info("INFO: User reaction captured.", userReactedAt, "Direction:", experiment.currentCondition);
 
   let deltaTime = userReactedAt - experiment.stimulusShownAt;
   experiment.times.push(deltaTime);
+  experiment.directions.push(experiment.currentCondition);
   document.querySelector("#time").textContent = deltaTime + " ms";
 };
 
@@ -170,10 +180,10 @@ const computeStatistics = function (timeArr) {
 };
 
 const exportExperimentLog = function () {
-  let csvHeader = "pid,trial#,reactionTime (ms)\n";
+  let csvHeader = "pid,trial#,direction,reactionTime (ms)\n";
   let pid = Math.floor(Math.random() * 900000) + 100000;
   let csvData = experiment.times
-    .map((time, idx) => [pid, idx, time].join(","))
+    .map((time, idx) => [pid, idx + 1, experiment.directions[idx], time].join(","))
     .join("\n"); //map passes every record in the log array to the getCSVDataLine, we also need to include pid to all rows
   const stamp = new Date().toISOString().slice(0,19)
 exportData(csvHeader + csvData, 'VisualReactionTestResults-' + stamp + '.csv');
