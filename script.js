@@ -1,6 +1,6 @@
 const experiment = {
   times: [],
-  directions: [],
+  directions: [], // keeps track of the direction for each trial
   maxTrials: 10,
   waitHnd: -1,
   started: false,
@@ -9,14 +9,17 @@ const experiment = {
   stimulusShown: false,
   stimulusShownAt: -1,
   btnDisabled: false,
+  // stores 10 trials (5 of each) in random order
   remainingDirections: shuffle(["left","left","left","left","left","right","right","right","right","right"]),
     currentCondition: null, // displays left png or right based on this condition  
 };
 
 const btn = document.querySelector(".button-default");
 const stimulus = document.querySelector(".circle");
-const arrowImage = document.querySelector("#arrow-image");
+// new selector for the <img> element inside the circle display
+const arrowImage = document.querySelector("#arrow-image"); 
 
+// randomise the order of trial arrows
 function shuffle(array){
   return array.sort(() => Math.random() - 0.5);
 }
@@ -63,6 +66,7 @@ const scheduleStimulus = function () {
 const showStimulus = function () {
     experiment.currentCondition = experiment.remainingDirections.pop();
 
+    // set the image source based on the arrow direction
     if (experiment.currentCondition === "left") {
         arrowImage.src = "arrow-left.png";
     }
@@ -87,10 +91,11 @@ const showStimulus = function () {
 const updateStimulus = function (state) {
   const otherState = state == "active" ? "inactive" : "active";
 
-    if (state === "inactive") {
-        arrowImage.src = "";
-        stimulus.style.backgroundColor = "";
-    }
+  // when inactive state, clear the image source so it disappears
+  if (state === "inactive") {
+    arrowImage.src = "";
+    stimulus.style.backgroundColor = "";
+  }
 
   stimulus.classList.add(state);
   stimulus.classList.remove(otherState);
@@ -102,6 +107,7 @@ const logReaction = function () {
 
   let deltaTime = userReactedAt - experiment.stimulusShownAt;
   experiment.times.push(deltaTime);
+  // store the matching direction for this attempt 
   experiment.directions.push(experiment.currentCondition);
   document.querySelector("#time").textContent = deltaTime + " ms";
 };
@@ -153,6 +159,7 @@ const btnAction = function () {
         "SD:",
         stats.sd.toFixed(2),
         "ms",
+        // display the new left/right averages
         "Left Mean:",
         stats.leftMean.toFixed(2),
         "ms",
@@ -167,7 +174,7 @@ const btnAction = function () {
 };
 
 const computeStatistics = function (timeArr) {
-  //to get mean, get sum of all trials and divide by number of trials m = sum(x)/cnt(x)
+    // calculate average for left and right arrow attempts
     let leftSum = 0;
     let rightSum = 0;
 
@@ -183,6 +190,7 @@ const computeStatistics = function (timeArr) {
     let leftAverage = leftSum / 5;
     let rightAverage = rightSum / 5;
 
+  //to get mean, get sum of all trials and divide by number of trials m = sum(x)/cnt(x)
   const sums = timeArr.reduce((acc, num) => acc + num, 0);
   const meanDeltaTime = sums / timeArr.length;
 
@@ -203,6 +211,7 @@ const computeStatistics = function (timeArr) {
 };
 
 const exportExperimentLog = function () {
+  // CSV header to include direction
   let csvHeader = "pid,trial#,direction,reactionTime (ms)\n";
   let pid = Math.floor(Math.random() * 900000) + 100000;
   let csvData = experiment.times
