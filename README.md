@@ -1,41 +1,15 @@
-# Exercise E1 – Human Capabilities - Reaction Time Experiments
-
-Here we provide the resources for running the Reaction Time experiments. 
-There are two experiments: Visual Reaction and Auditive Reaction.
-
-
-No code edits are required for this exercise. You are expected to run it as is.
-
 ## Visual Reaction Time Experiment:
 
-The visual reaction test works as follows:  
+    Our experiment is going to test users on their reaction times to two different arrow directions. ​
 
-←   The application shows a coloured circle as stimulus.
-←   Click the "Start Experiment" button to start experiment.
-←   After you start the experiment, the colour of the stimulus will change at a random time between 2 and 5 seconds.
-←   Your task is to react by pressing the SPACE bar.  
-←   The program measures the time from the colour change until the SPACE bar is hit and displays it on the screen.  
-←   The experiment ends after 10 trials, and the reaction times are exported in a .csv file. 
+    The objective of this exam is to test the reaction time of users when reacting to a right or a left arrow pointer, with the goal of testing for any variation in reaction time between the two arrows.​
 
-## Auditive Reaction Time Experiment:
+    Experiment design:​
 
-The audtive reaction test works as follows:  
+    2 different  arrow directions will be displayed sequentially with a white screen cooldown period in between. The goal is for the user to press the spacebar when they perceive either a right or left arrow on the screen.​
 
-←   The application will play a sound as stimulus.
-←   Click the "Start Experiment" button to start experiment.
-←   After you start the experiment, the sound stimulus will be played at a random time between 2 and 5 seconds.
-←   Your task is to react by pressing the SPACE bar.  
-←   The program measures the time from the start of sound playing until the SPACE bar is hit and displays it on the screen.  
-←   The experiment ends after 10 trials, and the reaction times are exported in a .csv file. 
+    There will be a random delay between 2-5 seconds before each new arrow direction/trial.​
 
-##Excercise Task:
-Try out each application first, and then use them to collect data on your reaction time. 
-Import into excel and calculate means:
-  - Compare it to the mean values shown at end of experiment
-  – Is there any difference in your reaction time depending on the type of stimulus?  
+    Each user will perform 10 trials to create an accurate mean time to account for any inconsistencies(5 of each direction appearing randomly).​
 
-**Bring the data to the seminar for further analysis.**
-
-_Created By Abe Karnik_
-
-_Updated for 24-25 By Dan Fitton_
+    The reaction time of each direction will be stored and averaged (5 of each per user) and then tested by 5 users also averaged giving the final mean reaction time.
